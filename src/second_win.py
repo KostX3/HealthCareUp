@@ -1,8 +1,8 @@
-from inst import*
-from PyQt5.QtWidgets import*
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import*
-from final_win import*
+from inst import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt, QTimer, QTime
+from PyQt5.QtGui import *
+from final_win import *
 
 class TestWin(QWidget):
     def __init__(self):
@@ -64,3 +64,17 @@ class TestWin(QWidget):
     def next_click(self):
         self.hide()
         self.thv = FinalWin()
+
+    def first_timer_init(self):
+        self.timer_obj = QTimer()
+        self.timer_obj.timeout.connect(self.timer1Event)
+        self.timer_obj.start(1000)
+
+    def timer1Event(self):
+        global time
+        time = time.addSecs(-1)
+        self.timer.setText(time.toString("hh:mm:ss"))
+        self.timer.setFont(QFont("Arial", 45, QFont.Bolt))
+        self.timer.setStyleSheet("color: rgb(127, 81, 252);")
+        if time == QTime(0, 0, 0):
+            self.timer_obj.stop()
